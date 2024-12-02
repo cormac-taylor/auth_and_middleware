@@ -88,8 +88,8 @@ export const validateName = (name) => {
 
 export const validateUserId = (userId) => {
   const res = validateStrOfLen(userId, MIN_USERID_LEN, MAX_USERID_LEN);
-  for (let c of userId)
-    if (c < "0" && "9" < c) throw "name must not contain numbers!";
+  for (let c of res)
+    if ("0" <= c && c <= "9") throw "name must not contain numbers!";
   return res.toLowerCase();
 };
 
@@ -112,7 +112,7 @@ export const validateColorCode = (colorCode) => {
   // https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
   const COLOR_CODE_REGEX = /^#[0-9A-Fa-f]{6}$/;
 
-  const res = validateStrOfLen(7, 7);
+  const res = validateStrOfLen(colorCode, 6, 8);
   if (!COLOR_CODE_REGEX.test(res)) throw "colorCode must be a valid color code";
   return res.toUpperCase();
 };
@@ -120,8 +120,12 @@ export const validateColorCode = (colorCode) => {
 export const validateTheme = (theme) => {
   const res = validateNonEmptyObject(theme);
   if (Object.keys(res).length !== 2) throw "theme must only contain two keys!";
-  res.backgroundColor = validateColorCode(res.backgroundColor);
-  res.fontColor = validateColorCode(res.fontColor);
+  try {
+    res.backgroundColor = validateColorCode(res.backgroundColor);
+    res.fontColor = validateColorCode(res.fontColor);
+  } catch (e) {
+    throw "backgroundColor and fontColor must have hex code color values.";
+  }
   if (res.backgroundColor === res.fontColor)
     throw "backgroundColor and fontColor must not be the same!";
   return res;

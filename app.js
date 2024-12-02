@@ -49,3 +49,69 @@ If logged in, the users status (administrator or user)
      B. If the user is logged in, the middleware will "fall through" to the next route calling the next() callback.
 
 */
+
+// import express from "express";
+// const app = express();
+// import session from "express-session";
+// import configRoutes from "./routes/index.js";
+
+// app.use(express.json());
+
+// app.use(
+//   session({
+//     name: "AwesomeWebApp",
+//     secret: "This is a secret.. shhh don't tell anyone",
+//     saveUninitialized: false,
+//     resave: false,
+//     cookie: { maxAge: 60000 },
+//   })
+// );
+
+// app.use("/private", (req, res, next) => {
+//   console.log(req.session.id);
+//   if (!req.session.user) {
+//     return res.redirect("/");
+//   } else {
+//     next();
+//   }
+// });
+
+// app.use("/login", (req, res, next) => {
+//   if (req.session.user) {
+//     return res.redirect("/private");
+//   } else {
+//     //here I',m just manually setting the req.method to post since it's usually coming from a form
+//     req.method = "POST";
+//     next();
+//   }
+// });
+
+// configRoutes(app);
+
+// app.listen(3000, () => {
+//   console.log("We've now got a server!");
+//   console.log("Your routes will be running on http://localhost:3000");
+// });
+import { signUpUser } from "./data/users.js";
+import { dbConnection, closeConnection } from "./config/mongoConnection.js";
+
+//lets drop the database each time this is run
+const db = await dbConnection();
+await db.dropDatabase();
+
+try {
+  const res = await signUpUser(
+    "Patrick",
+    "Hill",
+    "graffixnyc",
+    "HorsePull748*%",
+    "We have two lives, the 2nd begins when you realize you only have one.",
+    { backgroundColor: "#000000", fontColor: "#FFFFFF" },
+    "admin"
+  );
+  console.log(res);
+} catch (e) {
+  console.log(e);
+}
+
+await closeConnection();
