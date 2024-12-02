@@ -8,5 +8,9 @@
   },
   "author": "Cormac Taylor 20014003",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express-session": "^1.18.1"
+  }
 }

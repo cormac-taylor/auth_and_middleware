@@ -1,10 +1,13 @@
-//You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
 import { ObjectId } from "mongodb";
 
 const MIN_NAME_LEN = 2;
 const MAX_NAME_LEN = 25;
 const MIN_USERID_LEN = 5;
 const MAX_USERID_LEN = 10;
+const MIN_PASSWORD_LEN = 8;
+const MIN_QUOTE_LEN = 20;
+const MAX_QUOTE_LEN = 255;
+const VALID_ROLES = ["admin", "user"];
 
 export const validateBoolean = (bool) => {
   if (typeof bool !== "boolean") throw "bool must be a boolean!";
@@ -91,5 +94,41 @@ export const validateUserId = (userId) => {
 };
 
 export const validatePassword = (password) => {
-  // TO DO
+  // https://www.geeksforgeeks.org/javascript-program-to-validate-password-using-regular-expressions/
+  const PASSWORD_REGEX =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]+$/;
+
+  const res = validateStrOfLen(password, MIN_PASSWORD_LEN, Infinity);
+  if (!PASSWORD_REGEX.test(res))
+    throw "password must be a valid password! Include uppercase, digit, and special.";
+  return res;
+};
+
+export const validateQuote = (quote) => {
+  return validateStrOfLen(quote, MIN_QUOTE_LEN, MAX_QUOTE_LEN);
+};
+
+export const validateColorCode = (colorCode) => {
+  // https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
+  const COLOR_CODE_REGEX = /^#[0-9A-Fa-f]{6}$/;
+
+  const res = validateStrOfLen(7, 7);
+  if (!COLOR_CODE_REGEX.test(res)) throw "colorCode must be a valid color code";
+  return res.toUpperCase();
+};
+
+export const validateTheme = (theme) => {
+  const res = validateNonEmptyObject(theme);
+  if (Object.keys(res).length !== 2) throw "theme must only contain two keys!";
+  res.backgroundColor = validateColorCode(res.backgroundColor);
+  res.fontColor = validateColorCode(res.fontColor);
+  if (res.backgroundColor === res.fontColor)
+    throw "backgroundColor and fontColor must not be the same!";
+  return res;
+};
+
+export const validateRole = (role) => {
+  const res = validateString(role).toLowerCase();
+  for (let r of VALID_ROLES) if (r === res) return res;
+  throw "role must be a valid role!";
 };

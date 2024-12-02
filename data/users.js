@@ -1,5 +1,11 @@
 import { users } from "../config/mongoCollections";
-import { validateName, validateUserId } from "../helpers";
+import {
+  validateName,
+  validatePassword,
+  validateQuote,
+  validateTheme,
+  validateUserId,
+} from "../helpers";
 
 //import mongo collections, bcrypt and implement the following data functions
 export const signUpUser = async (
@@ -14,7 +20,9 @@ export const signUpUser = async (
   firstName = validateName(firstName);
   lastName = validateName(lastName);
   userId = validateUserId(userId);
-  // TO DO
+  password = validatePassword(password);
+  favoriteQuote = validateQuote(favoriteQuote);
+  themePreference = validateTheme(themePreference);
 
   const usersCollection = await users();
 
