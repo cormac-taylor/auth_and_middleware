@@ -8,6 +8,7 @@ import {
   validateUserId,
 } from "../helpers.js";
 import bcrypt from "bcrypt";
+
 const SALT_ROUNDS = 16;
 
 //import mongo collections, bcrypt and implement the following data functions
@@ -50,4 +51,26 @@ export const signUpUser = async (
   return { registrationCompleted: true };
 };
 
-export const signInUser = async (userId, password) => {};
+// Should userId be saved with case but checked without or can i save without?
+export const signInUser = async (userId, password) => {
+  userId = validateUserId(userId);
+  password = validatePassword(password);
+
+  const usersCollection = await users();
+
+  const foundUserId = await usersCollection.findOne({ userId: userId });
+  if (!foundUserId) throw "Either the userId or password is invalid";
+
+  const isMatch = await bcrypt.compare(password, foundUserId.password);
+  if (!isMatch) throw "Either the userId or password is invalid";
+
+  const res = {
+    firstName: foundUserId.firstName,
+    lastName: foundUserId.lastName,
+    userId: foundUserId.userId,
+    favoriteQuote: foundUserId.favoriteQuote,
+    themePreference: foundUserId.themePreference,
+    role: foundUserId.role,
+  };
+  return res;
+};
