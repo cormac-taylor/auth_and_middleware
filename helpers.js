@@ -1,6 +1,11 @@
 //You can add and export any helper functions you want here. If you aren't using any, then you can just leave this file as is.
 import { ObjectId } from "mongodb";
 
+const MIN_NAME_LEN = 2;
+const MAX_NAME_LEN = 25;
+const MIN_USERID_LEN = 5;
+const MAX_USERID_LEN = 10;
+
 export const validateBoolean = (bool) => {
   if (typeof bool !== "boolean") throw "bool must be a boolean!";
   return bool;
@@ -67,4 +72,24 @@ export const validateObjectID = (id) => {
   const res = validateString(id);
   if (!ObjectId.isValid(res)) throw "id must be an objectID!";
   return ObjectId.createFromHexString(res);
+};
+
+export const validateName = (name) => {
+  // https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
+  const NAME_REGEX = /^[a-zA-Z]+([ \-']{0,1}[a-zA-Z]+){0,2}[.]{0,1}$/;
+
+  const res = validateStrOfLen(name, MIN_NAME_LEN, MAX_NAME_LEN);
+  if (!NAME_REGEX.test(res)) throw "name must be a valid name!";
+  return res;
+};
+
+export const validateUserId = (userId) => {
+  const res = validateStrOfLen(userId, MIN_USERID_LEN, MAX_USERID_LEN);
+  for (let c of userId)
+    if (c < "0" && "9" < c) throw "name must not contain numbers!";
+  return res.toLowerCase();
+};
+
+export const validatePassword = (password) => {
+  // TO DO
 };
