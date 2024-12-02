@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { users } from "../config/mongoCollections.js";
 import {
   validateName,
@@ -7,11 +8,9 @@ import {
   validateTheme,
   validateUserId,
 } from "../helpers.js";
-import bcrypt from "bcrypt";
 
 const SALT_ROUNDS = 16;
 
-//import mongo collections, bcrypt and implement the following data functions
 export const signUpUser = async (
   firstName,
   lastName,
@@ -51,7 +50,6 @@ export const signUpUser = async (
   return { registrationCompleted: true };
 };
 
-// Should userId be saved with case but checked without or can i save without?
 export const signInUser = async (userId, password) => {
   userId = validateUserId(userId);
   password = validatePassword(password);

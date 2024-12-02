@@ -1,12 +1,12 @@
-//import express, express router as shown in lecture code
+import { Router } from "express";
+const router = Router();
 
-router.route('/').get(async (req, res) => {
-  //code here for GET THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
-  return res.json({error: 'YOU SHOULD NOT BE HERE!'});
+router.route("/").get(async (req, res) => {
+  return res.json({ error: "YOU SHOULD NOT BE HERE!" });
 });
 
 router
-  .route('/signupuser')
+  .route("/signupuser")
   .get(async (req, res) => {
     //code here for GET
   })
@@ -15,7 +15,7 @@ router
   });
 
 router
-  .route('/signinuser')
+  .route("/signinuser")
   .get(async (req, res) => {
     //code here for GET
   })
@@ -23,14 +23,16 @@ router
     //code here for POST
   });
 
-router.route('/user').get(async (req, res) => {
+router.route("/user").get(async (req, res) => {
   //code here for GET
 });
 
-router.route('/administrator').get(async (req, res) => {
+router.route("/administrator").get(async (req, res) => {
   //code here for GET
 });
 
-router.route('/signoutuser').get(async (req, res) => {
+router.route("/signoutuser").get(async (req, res) => {
   //code here for GET
 });
+
+export default router;
