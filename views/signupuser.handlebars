@@ -1,46 +1,117 @@
 <form action="/signupuser" method="POST" id="signup-form" name="signup-form">
-  <label for="firstName" id="firstName_label">
-    First Name
-    <input type="text" id="firstName" name="firstName" />
-  </label>
-  <label for="lastName" id="lastName_label">
-    Last Name
-    <input type="text" id="lastName" name="lastName" />
-  </label>
-  <label for="userId" id="userId_label">
-    User ID
-    <input type="text" id="userId" name="userId" />
-  </label>
-  <label for="password" id="password_label">
-    Password
-    <input type="password" id="password" name="password" />
-  </label>
-  <label for="confirmPassword" id="confirmPassword_label">
-    Confirm Password
-    <input type="password" id="confirmPassword" name="confirmPassword" />
-  </label>
-  <label for="favoriteQuote" id="favoriteQuote_label">
-    Favorite Quote
-    <input type="text" id="favoriteQuote" name="favoriteQuote" />
-  </label>
-  <label for="backgroundColor" id="backgroundColor_label">
-    Background Color
-    <input type="color" id="backgroundColor" name="backgroundColor" />
-  </label>
-  <label for="fontColor" id="fontColor_label">
-    Font Color
-    <input type="color" id="fontColor" name="fontColor" />
-  </label>
-  <label for="role" id="role_label">
-    Role
-    <select id="role" name="role">
-      <option value="admin" id="admin_option" class="role_option">Admin</option>
-      <option value="user" id="user_option" class="role_option">User</option>
-    </select>
-  </label>
-  <button type="submit" id="submitButton" name="submitButton">
-    Sign Up
-  </button>
+  <div>
+    <label for="firstName" id="firstName_label">
+      First Name
+      <input type="text" id="firstName" name="firstName" />
+    </label>
+    {{#if hasErrors}}
+      <label for="firstName" class="error">{{errors.firstName}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="lastName" id="lastName_label">
+      Last Name
+      <input type="text" id="lastName" name="lastName" />
+    </label>
+    {{#if hasErrors}}
+      <label for="lastName" class="error">{{errors.lastName}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="userId" id="userId_label">
+      User ID
+      <input type="text" id="userId" name="userId" />
+    </label>
+    {{#if hasErrors}}
+      <label for="userId" class="error">{{errors.userId}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="password" id="password_label">
+      Password
+      <input type="password" id="password" name="password" />
+    </label>
+    {{#if hasErrors}}
+      <label for="password" class="error">{{errors.password}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="confirmPassword" id="confirmPassword_label">
+      Confirm Password
+      <input type="password" id="confirmPassword" name="confirmPassword" />
+    </label>
+    {{#if hasErrors}}
+      <label
+        for="confirmPassword"
+        class="error"
+      >{{errors.confirmPassword}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="favoriteQuote" id="favoriteQuote_label">
+      Favorite Quote
+      <input type="text" id="favoriteQuote" name="favoriteQuote" />
+    </label>
+    {{#if hasErrors}}
+      <label for="favoriteQuote" class="error">{{errors.favoriteQuote}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="backgroundColor" id="backgroundColor_label">
+      Background Color
+      <input type="color" id="backgroundColor" name="backgroundColor" />
+    </label>
+    {{#if hasErrors}}
+      <label
+        for="backgroundColor"
+        class="error"
+      >{{errors.backgroundColor}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="fontColor" id="fontColor_label">
+      Font Color
+      <input type="color" id="fontColor" name="fontColor" />
+    </label>
+    {{#if hasErrors}}
+      <label for="fontColor" class="error">{{errors.fontColor}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="role" id="role_label">
+      Role
+      <select id="role" name="role">
+        <option
+          value="admin"
+          id="admin_option"
+          class="role_option"
+        >Admin</option>
+        <option value="user" id="user_option" class="role_option">User</option>
+      </select>
+    </label>
+    {{#if hasErrors}}
+      <label for="role" class="error">{{errors.role}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <button type="submit" id="submitButton" name="submitButton">
+      Sign Up
+    </button>
+    {{#if hasErrors}}
+      <label for="submitButton" class="error">{{errors.server}}</label>
+    {{/if}}
+  </div>
+
 </form>
+
 <a href="/signinuser" class="link">Already have an account? Click here to
   sign-in</a>

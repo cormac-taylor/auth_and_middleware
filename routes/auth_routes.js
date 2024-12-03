@@ -24,43 +24,45 @@ router
     }
   })
   .post(async (req, res) => {
-    const errors = [];
+    const errors = {};
     const signupData = req.body;
 
     try {
       signupData.firstName = validateName(signupData.firstName);
     } catch (e) {
-      errors.push(`firstName ${e}`);
+      errors.firstName = `firstName ${e}`;
     }
 
     try {
       signupData.lastName = validateName(signupData.lastName);
     } catch (e) {
-      errors.push(`lastName ${e}`);
+      errors.lastName = `lastName ${e}`;
     }
 
     try {
       signupData.userId = validateUserId(signupData.userId);
     } catch (e) {
-      errors.push(`userId ${e}`);
+      errors.userId = `userId ${e}`;
     }
 
     try {
       signupData.password = validatePassword(signupData.password);
     } catch (e) {
-      errors.push(`password ${e}`);
+      errors.password = `password ${e}`;
     }
 
     try {
       signupData.confirmPassword = validatePassword(signupData.confirmPassword);
+      if (signupData.password !== signupData.confirmPassword)
+        throw "must match password.";
     } catch (e) {
-      errors.push(`confirmPassword ${e}`);
+      errors.confirmPassword = "passwords must match.";
     }
 
     try {
       signupData.favoriteQuote = validateQuote(signupData.favoriteQuote);
     } catch (e) {
-      errors.push(`favoriteQuote ${e}`);
+      errors.favoriteQuote = `favoriteQuote ${e}`;
     }
 
     let invalidColor = false;
@@ -69,24 +71,27 @@ router
         signupData.backgroundColor
       );
     } catch (e) {
-      errors.push(`backgroundColor ${e}`);
+      errors.backgroundColor = `backgroundColor ${e}`;
       invalidColor = true;
     }
 
     try {
       signupData.fontColor = validateColorCode(signupData.fontColor);
     } catch (e) {
-      errors.push(`fontColor ${e}`);
+      errors.fontColor = `fontColor ${e}`;
       invalidColor = true;
     }
 
-    if (!invalidColor && signupData.backgroundColor === signupData.fontColor)
-      errors.push("background and font colors must be different.");
+    if (!invalidColor && signupData.backgroundColor === signupData.fontColor) {
+      const err = "background and font colors must be different.";
+      errors.backgroundColor = err;
+      errors.fontColor = err;
+    }
 
     try {
       signupData.role = validateRole(signupData.role);
     } catch (e) {
-      errors.push(`role ${e}`);
+      errors.role = `role ${e}`;
     }
 
     try {
@@ -99,11 +104,42 @@ router
         res.status(400);
         return;
       }
-      const {  } = signupData;
-      const newUser = await signUpUser(title, body, posterId, tags);
-      res.redirect(`/posts/${newPost._id}`);
+      const {
+        firstName,
+        lastName,
+        userId,
+        password,
+        favoriteQuote,
+        backgroundColor,
+        fontColor,
+        role,
+      } = signupData;
+      const newUser = await signUpUser(
+        firstName,
+        lastName,
+        userId,
+        password,
+        favoriteQuote,
+        {
+          backgroundColor,
+          fontColor,
+        },
+        role
+      );
+      if (newUser.registrationCompleted) {
+        res.redirect("/signinuser");
+        return;
+      } else {
+        res.render("signupuser", {
+          pageTitle: "Sign Up",
+          errors: { server: "Internal Server Error" },
+          hasErrors: true,
+        });
+        res.status(500);
+        return;
+      }
     } catch (e) {
-      res.status(500).json({ error: e });
+      res.status(400).json({ error: e });
     }
   });
 
