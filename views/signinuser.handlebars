@@ -1,5 +1,10 @@
-{{!--
-
-login form handlebar template
-
---}}
+<form action="/signinuser" method="POST" id="signin-form">
+  <input type="text" name="user_id" id="user_id" />
+  <input type="password" name="password" id="password" />
+  <button type="submit" name="submit_button" id="submit_button">
+    Sign In
+  </button>
+  <label for="user_id" id="user_id_label">User ID</label>
+  <label for="submit_button" id="submit_button_label">Password</label>
+</form>
+<a href="/signupuser" class="link">Click here to signup!</a>

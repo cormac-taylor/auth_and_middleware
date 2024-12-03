@@ -16,8 +16,12 @@ router
 
 router
   .route("/signinuser")
-  .get(async (req, res) => {
-    //code here for GET
+  .get(async (_, res) => {
+    try {
+      res.render("signinuser", { pageTitle: "Sign In" });
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
   })
   .post(async (req, res) => {
     //code here for POST
