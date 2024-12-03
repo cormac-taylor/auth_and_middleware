@@ -6,8 +6,9 @@ import {
   validateQuote,
   validateRole,
   validateUserId,
-} from "../helpers";
-import { signUpUser } from "../data/users";
+} from "../helpers.js";
+import { signUpUser } from "../data/users.js";
+import { object } from "webidl-conversions";
 const router = Router();
 
 router.route("/").get(async (req, res) => {
@@ -30,39 +31,42 @@ router
     try {
       signupData.firstName = validateName(signupData.firstName);
     } catch (e) {
-      errors.firstName = `firstName ${e}`;
+      errors.firstName = e;
     }
 
     try {
       signupData.lastName = validateName(signupData.lastName);
     } catch (e) {
-      errors.lastName = `lastName ${e}`;
+      errors.lastName = e;
     }
 
     try {
       signupData.userId = validateUserId(signupData.userId);
     } catch (e) {
-      errors.userId = `userId ${e}`;
+      errors.userId = e;
     }
 
     try {
       signupData.password = validatePassword(signupData.password);
     } catch (e) {
-      errors.password = `password ${e}`;
+      errors.password = e;
     }
 
     try {
-      signupData.confirmPassword = validatePassword(signupData.confirmPassword);
-      if (signupData.password !== signupData.confirmPassword)
+      if (
+        !errors.password &&
+        signupData.password !== signupData.confirmPassword
+      )
         throw "must match password.";
     } catch (e) {
-      errors.confirmPassword = "passwords must match.";
+      errors.confirmPassword = e;
+      if (!errors.password) errors.password = "try again.";
     }
 
     try {
       signupData.favoriteQuote = validateQuote(signupData.favoriteQuote);
     } catch (e) {
-      errors.favoriteQuote = `favoriteQuote ${e}`;
+      errors.favoriteQuote = e;
     }
 
     let invalidColor = false;
@@ -71,19 +75,19 @@ router
         signupData.backgroundColor
       );
     } catch (e) {
-      errors.backgroundColor = `backgroundColor ${e}`;
+      errors.backgroundColor = e;
       invalidColor = true;
     }
 
     try {
       signupData.fontColor = validateColorCode(signupData.fontColor);
     } catch (e) {
-      errors.fontColor = `fontColor ${e}`;
+      errors.fontColor = e;
       invalidColor = true;
     }
 
     if (!invalidColor && signupData.backgroundColor === signupData.fontColor) {
-      const err = "background and font colors must be different.";
+      const err = "these colors must be different.";
       errors.backgroundColor = err;
       errors.fontColor = err;
     }
@@ -91,19 +95,21 @@ router
     try {
       signupData.role = validateRole(signupData.role);
     } catch (e) {
-      errors.role = `role ${e}`;
+      errors.role = e;
     }
 
     try {
-      if (errors.length > 0) {
+      if (Object.keys(errors).length > 0) {
         res.render("signupuser", {
           pageTitle: "Sign Up",
-          errors: errors,
+          data: signupData,
           hasErrors: true,
+          errors: errors,
         });
         res.status(400);
         return;
       }
+
       const {
         firstName,
         lastName,
@@ -114,6 +120,7 @@ router
         fontColor,
         role,
       } = signupData;
+
       const newUser = await signUpUser(
         firstName,
         lastName,
@@ -126,20 +133,28 @@ router
         },
         role
       );
+
       if (newUser.registrationCompleted) {
         res.redirect("/signinuser");
         return;
       } else {
         res.render("signupuser", {
           pageTitle: "Sign Up",
-          errors: { server: "Internal Server Error" },
+          data: signupData,
           hasErrors: true,
+          errors: { other: "Internal Server Error" },
         });
         res.status(500);
         return;
       }
     } catch (e) {
-      res.status(400).json({ error: e });
+      res.render("signupuser", {
+        pageTitle: "Sign Up",
+        data: signupData,
+        hasErrors: true,
+        errors: { other: e},
+      });
+      res.status(400);
     }
   });
 

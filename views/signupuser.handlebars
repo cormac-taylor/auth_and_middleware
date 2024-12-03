@@ -1,8 +1,17 @@
+<h1>Sign Up</h1>
+
 <form action="/signupuser" method="POST" id="signup-form" name="signup-form">
+
   <div>
     <label for="firstName" id="firstName_label">
       First Name
-      <input type="text" id="firstName" name="firstName" />
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        value="{{data.firstName}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label for="firstName" class="error">{{errors.firstName}}</label>
@@ -12,7 +21,13 @@
   <div>
     <label for="lastName" id="lastName_label">
       Last Name
-      <input type="text" id="lastName" name="lastName" />
+      <input
+        type="text"
+        id="lastName"
+        name="lastName"
+        value="{{data.lastName}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label for="lastName" class="error">{{errors.lastName}}</label>
@@ -22,7 +37,13 @@
   <div>
     <label for="userId" id="userId_label">
       User ID
-      <input type="text" id="userId" name="userId" />
+      <input
+        type="text"
+        id="userId"
+        name="userId"
+        value="{{data.userId}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label for="userId" class="error">{{errors.userId}}</label>
@@ -32,7 +53,13 @@
   <div>
     <label for="password" id="password_label">
       Password
-      <input type="password" id="password" name="password" />
+      <input
+        type="password"
+        id="password"
+        name="password"
+        value="{{data.password}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label for="password" class="error">{{errors.password}}</label>
@@ -42,7 +69,13 @@
   <div>
     <label for="confirmPassword" id="confirmPassword_label">
       Confirm Password
-      <input type="password" id="confirmPassword" name="confirmPassword" />
+      <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        value="{{data.confirmPassword}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label
@@ -55,7 +88,13 @@
   <div>
     <label for="favoriteQuote" id="favoriteQuote_label">
       Favorite Quote
-      <input type="text" id="favoriteQuote" name="favoriteQuote" />
+      <input
+        type="text"
+        id="favoriteQuote"
+        name="favoriteQuote"
+        value="{{data.favoriteQuote}}"
+        class="full_width_input"
+      />
     </label>
     {{#if hasErrors}}
       <label for="favoriteQuote" class="error">{{errors.favoriteQuote}}</label>
@@ -65,7 +104,12 @@
   <div>
     <label for="backgroundColor" id="backgroundColor_label">
       Background Color
-      <input type="color" id="backgroundColor" name="backgroundColor" />
+      <input
+        type="color"
+        id="backgroundColor"
+        name="backgroundColor"
+        value="{{data.backgroundColor}}"
+      />
     </label>
     {{#if hasErrors}}
       <label
@@ -78,7 +122,12 @@
   <div>
     <label for="fontColor" id="fontColor_label">
       Font Color
-      <input type="color" id="fontColor" name="fontColor" />
+      <input
+        type="color"
+        id="fontColor"
+        name="fontColor"
+        value="{{data.fontColor}}"
+      />
     </label>
     {{#if hasErrors}}
       <label for="fontColor" class="error">{{errors.fontColor}}</label>
@@ -107,7 +156,7 @@
       Sign Up
     </button>
     {{#if hasErrors}}
-      <label for="submitButton" class="error">{{errors.server}}</label>
+      <label for="submitButton" class="error">{{errors.other}}</label>
     {{/if}}
   </div>
 

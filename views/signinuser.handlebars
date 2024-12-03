@@ -1,14 +1,36 @@
+<h1>Sign In</h1>
+
 <form action="/signinuser" method="POST" id="signin-form">
-  <label for="user_id" id="user_id_label">
-    User ID
-    <input type="text" id="user_id" name="user_id" />
-  </label>
-  <label for="password" id="password_label">
-    Password
-    <input type="password" id="password" name="password" />
-  </label>
-  <button type="submit" id="signin_button" name="signin_button">
-    Sign In
-  </button>
+
+  <div>
+    <label for="user_id" id="user_id_label">
+      User ID
+      <input type="text" id="user_id" name="user_id" />
+    </label>
+    {{#if hasErrors}}
+      <label for="user_id" class="error">{{errors.user_id}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <label for="password" id="password_label">
+      Password
+      <input type="password" id="password" name="password" />
+    </label>
+    {{#if hasErrors}}
+      <label for="password" class="error">{{errors.password}}</label>
+    {{/if}}
+  </div>
+
+  <div>
+    <button type="submit" id="signin_button" name="signin_button">
+      Sign In
+    </button>
+    {{#if hasErrors}}
+      <label for="signin_button" class="error">{{errors.server}}</label>
+    {{/if}}
+  </div>
+
 </form>
+
 <a href="/signupuser" class="link">Click here to signup!</a>

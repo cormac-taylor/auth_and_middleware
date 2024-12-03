@@ -111,7 +111,7 @@ export const validatePassword = (password) => {
 
   const res = validateStrOfLen(password, MIN_PASSWORD_LEN, Infinity);
   if (!PASSWORD_REGEX.test(res))
-    throw "must be a valid password. Include at least one of the following: uppercase, digit, and special character.";
+    throw "not strong enough. Include a uppercase, digit, and special character.";
   return res;
 };
 
