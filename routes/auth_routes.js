@@ -8,10 +8,16 @@ router.route("/").get(async (req, res) => {
 router
   .route("/signupuser")
   .get(async (req, res) => {
-    //code here for GET
+    try {
+      res.render("signupuser", { pageTitle: "Sign Up" });
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
   })
   .post(async (req, res) => {
-    //code here for POST
+    const errors = []
+    const formData = req.body;
+    if (formData.firstName === undefined) // To Do
   });
 
 router

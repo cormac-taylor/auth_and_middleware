@@ -1,5 +1,46 @@
-{{!--
-
-registration handelbars
-
---}}
+<form action="/signupuser" method="POST" id="signup-form" name="signup-form">
+  <label for="firstName" id="firstName_label">
+    First Name
+    <input type="text" id="firstName" name="firstName" />
+  </label>
+  <label for="lastName" id="lastName_label">
+    Last Name
+    <input type="text" id="lastName" name="lastName" />
+  </label>
+  <label for="userId" id="userId_label">
+    User ID
+    <input type="text" id="userId" name="userId" />
+  </label>
+  <label for="password" id="password_label">
+    Password
+    <input type="password" id="password" name="password" />
+  </label>
+  <label for="confirmPassword" id="confirmPassword_label">
+    Confirm Password
+    <input type="password" id="confirmPassword" name="confirmPassword" />
+  </label>
+  <label for="favoriteQuote" id="favoriteQuote_label">
+    Favorite Quote
+    <input type="text" id="favoriteQuote" name="favoriteQuote" />
+  </label>
+  <label for="backgroundColor" id="backgroundColor_label">
+    Background Color
+    <input type="color" id="backgroundColor" name="backgroundColor" />
+  </label>
+  <label for="fontColor" id="fontColor_label">
+    Font Color
+    <input type="color" id="fontColor" name="fontColor" />
+  </label>
+  <label for="role" id="role_label">
+    Role
+    <select id="role" name="role">
+      <option value="admin" id="admin_option" class="role_option">Admin</option>
+      <option value="user" id="user_option" class="role_option">User</option>
+    </select>
+  </label>
+  <button type="submit" id="submitButton" name="submitButton">
+    Sign Up
+  </button>
+</form>
+<a href="/signinuser" class="link">Already have an account? Click here to
+  sign-in</a>
