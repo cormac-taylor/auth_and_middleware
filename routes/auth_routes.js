@@ -7,7 +7,7 @@ import {
   validateRole,
   validateUserId,
 } from "../helpers.js";
-import { signUpUser } from "../data/users.js";
+import { signInUser, signUpUser } from "../data/users.js";
 import { object } from "webidl-conversions";
 const router = Router();
 
@@ -152,7 +152,7 @@ router
         pageTitle: "Sign Up",
         data: signupData,
         hasErrors: true,
-        errors: { other: e},
+        errors: { other: e },
       });
       res.status(400);
     }
@@ -168,7 +168,50 @@ router
     }
   })
   .post(async (req, res) => {
-    //code here for POST
+    const errors = {};
+    const signinData = req.body;
+
+    try {
+      signinData.user_id = validateUserId(signinData.user_id);
+    } catch (e) {
+      errors.user_id = e;
+    }
+
+    try {
+      signinData.password = validatePassword(signinData.password);
+    } catch (e) {
+      errors.password = e;
+    }
+
+    try {
+      if (Object.keys(errors).length > 0) {
+        res.render("signinuser", {
+          pageTitle: "Sign In",
+          data: { user_id: signinData.user_id },
+          hasErrors: true,
+          errors: errors,
+        });
+        res.status(400);
+        return;
+      }
+
+      const { user_id, password } = signinData;
+
+      const signedInUser = await signInUser(user_id, password);
+
+      // To Do
+      res.redirect("/")
+      return;
+
+    } catch (e) {
+      res.render("signinuser", {
+        pageTitle: "Sign In",
+        data: { user_id: signinData.user_id },
+        hasErrors: true,
+        errors: { other: e },
+      });
+      res.status(400);
+    }
   });
 
 router.route("/user").get(async (req, res) => {

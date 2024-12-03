@@ -55,12 +55,13 @@ export const signInUser = async (userId, password) => {
   password = validatePassword(password);
 
   const usersCollection = await users();
-
+  const errMsg = "Either the userId or password is invalid";
+  
   const foundUserId = await usersCollection.findOne({ userId: userId });
-  if (!foundUserId) throw "Either the userId or password is invalid";
+  if (!foundUserId) throw errMsg;
 
   const isMatch = await bcrypt.compare(password, foundUserId.password);
-  if (!isMatch) throw "Either the userId or password is invalid";
+  if (!isMatch) throw errMsg;
 
   const res = {
     firstName: foundUserId.firstName,
