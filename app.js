@@ -73,24 +73,121 @@ app.use(
   })
 );
 
+app.use("/", (req, _, next) => {
+  const timestamp = new Date().toUTCString();
+  const method = req.method;
+  const route = req.originalUrl;
+  let auth = "";
+  let admin = "";
+
+  if (!req.session || !req.session.user) {
+    auth = "Non-";
+  } else if (req.session.user.role === "admin") {
+    admin = "Administrator ";
+  }
+  console.log(
+    `[${timestamp}]: ${method} ${route} (${auth}Authenticated ${admin}User)`
+  );
+  next();
+});
+
 app.use("/", (req, res, next) => {
-  console.log(req.session.id);
-  if (!req.session.user) {
-    return res.redirect("/");
+  const route = req.originalUrl;
+  if (route === "/") {
+    req.method = "GET";
+    if (!req.session || !req.session.user) {
+      res.redirect("/signinuser");
+    } else if (req.session.user.role === "admin") {
+      res.redirect("/administrator");
+    } else if (req.session.user.role === "user") {
+      res.redirect("/user");
+    } else {
+      res.redirect("/signinuser");
+    }
   } else {
     next();
   }
 });
 
-// app.use("/login", (req, res, next) => {
-//   if (req.session.user) {
-//     return res.redirect("/private");
-//   } else {
-//     //here I',m just manually setting the req.method to post since it's usually coming from a form
-//     req.method = "POST";
-//     next();
-//   }
-// });
+app.use("/signinuser", (req, res, next) => {
+  const method = req.method;
+  if (method.toLowerCase() === "get") {
+    if (!req.session || !req.session.user) {
+      next();
+    } else if (req.session.user.role === "admin") {
+      res.redirect("/administrator");
+    } else if (req.session.user.role === "user") {
+      res.redirect("/user");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+app.use("/signupuser", (req, res, next) => {
+  const method = req.method;
+  if (method.toLowerCase() === "get") {
+    if (!req.session || !req.session.user) {
+      next();
+    } else if (req.session.user.role === "admin") {
+      res.redirect("/administrator");
+    } else if (req.session.user.role === "user") {
+      res.redirect("/user");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+app.use("/user", (req, res, next) => {
+  const method = req.method;
+  if (method.toLowerCase() === "get") {
+    if (!req.session || !req.session.user) {
+      res.redirect("/signinuser");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+app.use("/administrator", (req, res, next) => {
+  const method = req.method;
+  if (method.toLowerCase() === "get") {
+    if (!req.session || !req.session.user) {
+      res.redirect("/signinuser");
+    } else if (req.session.user.role !== "admin") {
+      res.render("error", {
+        pageTitle: "403 Forbiden",
+        error: "403 Forbiden",
+      });
+      res.status(403);
+      return;
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
+
+app.use("/signoutuser", (req, res, next) => {
+  const method = req.method;
+  if (method.toLowerCase() === "get") {
+    if (!req.session || !req.session.user) {
+      res.redirect("/signinuser");
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 configRoutes(app);
 

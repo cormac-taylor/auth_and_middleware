@@ -56,7 +56,7 @@ export const signInUser = async (userId, password) => {
 
   const usersCollection = await users();
   const errMsg = "Either the userId or password is invalid";
-  
+
   const foundUserId = await usersCollection.findOne({ userId: userId });
   if (!foundUserId) throw errMsg;
 

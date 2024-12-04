@@ -260,7 +260,7 @@ router.route("/user").get(async (req, res) => {
 router.route("/administrator").get(async (req, res) => {
   const session = req.session.user;
   res.render("administrator", {
-    pageTitle: "Admin",
+    pageTitle: "Administrator",
     firstName: session.firstName,
     lastName: session.lastName,
     currentTime: session.currentTime,
