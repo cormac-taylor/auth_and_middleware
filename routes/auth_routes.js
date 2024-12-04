@@ -244,12 +244,15 @@ router
 
 router.route("/user").get(async (req, res) => {
   const session = req.session.user;
+
+  const date = new Date();
+
   res.render("user", {
     pageTitle: "User",
     firstName: session.firstName,
     lastName: session.lastName,
-    currentTime: session.currentTime,
-    currentDate: session.currentDate,
+    currentTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+    currentDate: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
     role: session.role,
     favoriteQuote: session.favoriteQuote,
     isAdmin: session.role === "admin",
@@ -259,12 +262,15 @@ router.route("/user").get(async (req, res) => {
 
 router.route("/administrator").get(async (req, res) => {
   const session = req.session.user;
+
+  const date = new Date();
+
   res.render("administrator", {
     pageTitle: "Administrator",
     firstName: session.firstName,
     lastName: session.lastName,
-    currentTime: session.currentTime,
-    currentDate: session.currentDate,
+    currentTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+    currentDate: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
     favoriteQuote: session.favoriteQuote,
   });
   return;
