@@ -199,10 +199,38 @@ router
 
       const signedInUser = await signInUser(user_id, password);
 
-      // To Do
-      res.redirect("/")
-      return;
+      const {
+        firstName,
+        lastName,
+        userId,
+        favoriteQuote,
+        themePreference,
+        role,
+      } = signedInUser;
 
+      req.session.user = {
+        firstName,
+        lastName,
+        userId,
+        favoriteQuote,
+        themePreference,
+        role,
+      };
+
+      if (role === "admin") {
+        res.redirect("/administrator");
+        return;
+      } else if (role === "user") {
+        res.redirect("/user");
+        return;
+      } else {
+        res.render("error", {
+          pageTitle: "403 Forbidden",
+          error: "403 Forbidden",
+        });
+        res.status(403);
+        return;
+      }
     } catch (e) {
       res.render("signinuser", {
         pageTitle: "Sign In",
@@ -215,11 +243,26 @@ router
   });
 
 router.route("/user").get(async (req, res) => {
-  //code here for GET
+  const session = req.session.user;
+  res.render("user", {
+    pageTitle: "User",
+    firstName: session.firstName,
+    lastName: session.lastName,
+    currentTime: session.currentTime,
+    currentDate: session.currentDate,
+    role: session.role,
+    favoriteQuote: session.favoriteQuote,
+    isAdmin: session.role === "admin",
+  });
+  return;
 });
 
 router.route("/administrator").get(async (req, res) => {
-  //code here for GET
+  res.render("error", {
+    pageTitle: "test",
+    error: "administrator",
+  });
+  return;
 });
 
 router.route("/signoutuser").get(async (req, res) => {
@@ -227,3 +270,10 @@ router.route("/signoutuser").get(async (req, res) => {
 });
 
 export default router;
+
+// Remember:
+// case insensitive query for username
+// reseting select for user in signup with client js
+// // const selectElement = document.getElementById('userSelection');
+// // selectElement.value = 'option2'; // Sets "Option 2" as the selected option.
+// make sure the user page gets filled in
