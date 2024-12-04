@@ -40,7 +40,10 @@ export const signUpUser = async (
 
   const usersCollection = await users();
 
-  const usedUserId = await usersCollection.findOne({ userId: userId });
+  const caseInsensitiveUserId = new RegExp([".*", userId, ".*"].join(""), "i");
+  const usedUserId = await usersCollection.findOne({
+    userId: caseInsensitiveUserId,
+  });
   if (usedUserId) throw "userId is taken!";
 
   const insertInfo = await usersCollection.insertOne(newUser);
@@ -57,7 +60,10 @@ export const signInUser = async (userId, password) => {
   const usersCollection = await users();
   const errMsg = "Either the userId or password is invalid";
 
-  const foundUserId = await usersCollection.findOne({ userId: userId });
+  const caseInsensitiveUserId = new RegExp([".*", userId, ".*"].join(""), "i");
+  const foundUserId = await usersCollection.findOne({
+    userId: caseInsensitiveUserId,
+  });
   if (!foundUserId) throw errMsg;
 
   const isMatch = await bcrypt.compare(password, foundUserId.password);

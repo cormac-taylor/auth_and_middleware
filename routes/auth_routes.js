@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  timeFormat,
   validateColorCode,
   validateName,
   validatePassword,
@@ -251,8 +252,12 @@ router.route("/user").get(async (req, res) => {
     pageTitle: "User",
     firstName: session.firstName,
     lastName: session.lastName,
-    currentTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
-    currentDate: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+    currentTime: `${timeFormat(((date.getHours() - 1) % 12) + 1)}:${timeFormat(
+      date.getMinutes()
+    )}:${timeFormat(date.getSeconds())}`,
+    currentDate: `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()}`,
     role: session.role,
     favoriteQuote: session.favoriteQuote,
     isAdmin: session.role === "admin",
@@ -269,8 +274,12 @@ router.route("/administrator").get(async (req, res) => {
     pageTitle: "Administrator",
     firstName: session.firstName,
     lastName: session.lastName,
-    currentTime: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
-    currentDate: `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`,
+    currentTime: `${timeFormat(((date.getHours() - 1) % 12) + 1)}:${timeFormat(
+      date.getMinutes()
+    )}:${timeFormat(date.getSeconds())}`,
+    currentDate: `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()}`,
     favoriteQuote: session.favoriteQuote,
   });
   return;
@@ -295,4 +304,3 @@ export default router;
 // reseting select for user in signup with client js
 // // const selectElement = document.getElementById('userSelection');
 // // selectElement.value = 'option2'; // Sets "Option 2" as the selected option.
-// make sure the user page gets filled in

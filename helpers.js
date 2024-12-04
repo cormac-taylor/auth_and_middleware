@@ -101,7 +101,7 @@ export const validateUserId = (userId) => {
   const res = validateStrOfLen(userId, MIN_USERID_LEN, MAX_USERID_LEN);
   for (let c of res)
     if ("0" <= c && c <= "9") throw "must not contain numbers.";
-  return res.toLowerCase();
+  return res;
 };
 
 export const validatePassword = (password) => {
@@ -146,3 +146,7 @@ export const validateRole = (role) => {
   for (let r of VALID_ROLES) if (r === res) return res;
   throw "must be either admin or user.";
 };
+
+export const timeFormat = (time) => {
+  return String(time).padStart(2, '0')
+}
