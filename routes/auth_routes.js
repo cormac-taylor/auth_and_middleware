@@ -258,15 +258,28 @@ router.route("/user").get(async (req, res) => {
 });
 
 router.route("/administrator").get(async (req, res) => {
-  res.render("error", {
-    pageTitle: "test",
-    error: "administrator",
+  const session = req.session.user;
+  res.render("administrator", {
+    pageTitle: "Admin",
+    firstName: session.firstName,
+    lastName: session.lastName,
+    currentTime: session.currentTime,
+    currentDate: session.currentDate,
+    favoriteQuote: session.favoriteQuote,
   });
   return;
 });
 
 router.route("/signoutuser").get(async (req, res) => {
-  //code here for GET
+  if (req.session) {
+    req.session.destroy();
+    res.render("signoutuser", {
+      pageTitle: "Signed Out",
+    });
+    return;
+  } else {
+    res.redirect("signinuser", { pageTitle: "Sign In" });
+  }
 });
 
 export default router;
