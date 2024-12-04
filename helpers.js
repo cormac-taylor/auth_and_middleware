@@ -123,7 +123,7 @@ export const validateColorCode = (colorCode) => {
   // https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
   const COLOR_CODE_REGEX = /^#[0-9A-Fa-f]{6}$/;
 
-  const res = validateStrOfLen(colorCode, 6, 8);
+  const res = validateStrOfLen(colorCode, 7, 7);
   if (!COLOR_CODE_REGEX.test(res)) throw "must be a valid hex color code.";
   return res.toUpperCase();
 };

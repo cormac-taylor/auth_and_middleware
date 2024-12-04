@@ -1,36 +1,52 @@
-<h1>Sign In</h1>
-
+<h1 id="signinHeader" class="header">Sign In</h1>
 <form action="/signinuser" method="POST" id="signin-form">
 
   <div>
-    <label for="user_id" id="user_id_label">
+    <label for="user_id" id="user_id_label" class="input_label">
       User ID
       <input type="text" id="user_id" name="user_id" value="{{data.user_id}}" />
     </label>
     {{#if hasErrors}}
-      <label for="user_id" class="error">{{errors.user_id}}</label>
+      <label
+        for="user_id"
+        class="error"
+        id="user_id_error"
+      >{{errors.user_id}}</label>
     {{/if}}
   </div>
 
   <div>
-    <label for="password" id="password_label">
+    <label for="password" id="password_label" class="input_label">
       Password
       <input type="password" id="password" name="password" />
     </label>
     {{#if hasErrors}}
-      <label for="password" class="error">{{errors.password}}</label>
+      <label
+        for="password"
+        class="error"
+        id="password_error"
+      >{{errors.password}}</label>
     {{/if}}
   </div>
 
   <div>
-    <button type="submit" id="signin_button" name="signin_button">
-      Sign In
-    </button>
+    <div>
+      <button type="submit" id="signin_button" name="signin_button">
+        Sign In
+      </button>
+    </div>
     {{#if hasErrors}}
-      <label for="signin_button" class="error">{{errors.other}}</label>
+      <label
+        for="signin_button"
+        class="error"
+        id="signin_error"
+      >{{errors.other}}</label>
     {{/if}}
+    <ul id="client_error"></ul>
   </div>
 
 </form>
 
 <a href="/signupuser" class="link">Click here to signup!</a>
+
+<script src="/public/js/form_validate.js"></script>

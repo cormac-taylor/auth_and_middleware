@@ -9,10 +9,9 @@ import {
   validateUserId,
 } from "../helpers.js";
 import { signInUser, signUpUser } from "../data/users.js";
-import { object } from "webidl-conversions";
 const router = Router();
 
-router.route("/").get(async (req, res) => {
+router.route("/").get(async (_, res) => {
   return res.json({ error: "YOU SHOULD NOT BE HERE!" });
 });
 
@@ -298,9 +297,3 @@ router.route("/signoutuser").get(async (req, res) => {
 });
 
 export default router;
-
-// Remember:
-// case insensitive query for username
-// reseting select for user in signup with client js
-// // const selectElement = document.getElementById('userSelection');
-// // selectElement.value = 'option2'; // Sets "Option 2" as the selected option.

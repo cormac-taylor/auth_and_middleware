@@ -1,1 +1,164 @@
-// In this file, you must perform all client-side validation for every single form input (and the role dropdown) on your pages. The constraints for those fields are the same as they are for the data functions and routes. Using client-side JS, you will intercept the form's submit event when the form is submitted and If there is an error in the user's input or they are missing fields, you will not allow the form to submit to the server and will display an error on the page to the user informing them of what was incorrect or missing.  You must do this for ALL fields for the register form as well as the login form. If the form being submitted has all valid data, then you will allow it to submit to the server for processing. Don't forget to check that password and confirm password match on the registration form!
+// Remember:
+// reseting select for user in signup with client js
+// // const selectElement = document.getElementById('userSelection');
+// // selectElement.value = 'option2'; // Sets "Option 2" as the selected option.
+
+const MIN_NAME_LEN = 2;
+const MAX_NAME_LEN = 25;
+const MIN_USERID_LEN = 5;
+const MAX_USERID_LEN = 10;
+const MIN_PASSWORD_LEN = 8;
+const MIN_QUOTE_LEN = 20;
+const MAX_QUOTE_LEN = 255;
+const VALID_ROLES = ["admin", "user"];
+
+// Sign in form
+let signinForm = document.getElementById("signin-form");
+let user_id_input = document.getElementById("user_id");
+let password_input = document.getElementById("password");
+let client_error = document.getElementById("client_error");
+
+// Sign up form
+
+
+if (signinForm) {
+  signinForm.addEventListener("submit", (event) => {
+    console.log("test");
+    const errors = [];
+    const userId = user_id_input.value;
+    const password = password_input.value;
+
+    try {
+      user_id_input.value = validateUserId(userId);
+    } catch (e) {
+      user_id_input.value = userId.trim();
+      errors.push(`User ID ${e}`);
+    }
+
+    try {
+      password_input.value = validatePassword(password);
+    } catch (e) {
+      password_input.value = password.trim();
+      errors.push(`Password ${e}`);
+    }
+
+    if (errors.length > 0) {
+      event.preventDefault();
+
+      client_error.innerHTML = "";
+      for (let e of errors) {
+        let li = document.createElement("li");
+        li.className = "error";
+        li.innerHTML = e;
+        client_error.appendChild(li);
+      }
+    }
+  });
+}
+
+// input validation helpers
+const validateString = (str) => {
+  if (typeof str !== "string") throw "must be a string.";
+  const res = str.trim();
+  if (!res) throw "must not be empty.";
+  return res;
+};
+
+const validateStrOfLen = (str, minLen, maxLen) => {
+  const res = validateString(str);
+  if (res.length < minLen) throw `must be at least ${minLen} chars!`;
+  if (res.length > maxLen) throw `must be at most ${maxLen} chars!`;
+  return res;
+};
+
+const validateName = (name) => {
+  // https://a-tokyo.medium.com/first-and-last-name-validation-for-forms-and-databases-d3edf29ad29d
+  const NAME_REGEX = /^[a-zA-Z]+([ \-']{0,1}[a-zA-Z]+){0,2}[.]{0,1}$/;
+
+  const res = validateStrOfLen(name, MIN_NAME_LEN, MAX_NAME_LEN);
+  if (!NAME_REGEX.test(res)) throw "must be a valid name.";
+  return res;
+};
+
+const validateUserId = (userId) => {
+  const res = validateStrOfLen(userId, MIN_USERID_LEN, MAX_USERID_LEN);
+  for (let c of res)
+    if ("0" <= c && c <= "9") throw "must not contain numbers.";
+  return res;
+};
+
+const validatePassword = (password) => {
+  // https://www.geeksforgeeks.org/javascript-program-to-validate-password-using-regular-expressions/
+  const PASSWORD_REGEX =
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&])[A-Za-z\d@.#$!%*?&]+$/;
+
+  const res = validateStrOfLen(password, MIN_PASSWORD_LEN, Infinity);
+  if (!PASSWORD_REGEX.test(res))
+    throw "not strong enough. Include a uppercase, digit, and special character.";
+  return res;
+};
+
+const validateQuote = (quote) => {
+  return validateStrOfLen(quote, MIN_QUOTE_LEN, MAX_QUOTE_LEN);
+};
+
+const validateColorCode = (colorCode) => {
+  // https://stackoverflow.com/questions/8027423/how-to-check-if-a-string-is-a-valid-hex-color-representation
+  const COLOR_CODE_REGEX = /^#[0-9A-Fa-f]{6}$/;
+
+  const res = validateStrOfLen(colorCode, 7, 7);
+  if (!COLOR_CODE_REGEX.test(res)) throw "must be a valid hex color code.";
+  return res.toUpperCase();
+};
+
+const validateRole = (role) => {
+  const res = validateString(role).toLowerCase();
+  for (let r of VALID_ROLES) if (r === res) return res;
+  throw "must be either admin or user.";
+};
+
+// let formLabel = document.getElementById("formLabel");
+// let form = document.getElementById("form");
+// let fibInput = document.getElementById("fibonacci_index_input");
+// let subButton = document.getElementById("submitButton");
+
+// let errorDiv = document.getElementById("error");
+// let calculatingDiv = document.getElementById("calculating");
+
+// let results = document.getElementById("fibonacciResults");
+
+// if (form) {
+//   form.addEventListener("submit", (event) => {
+//     event.preventDefault();
+//     const input = fibInput.value;
+//     let index;
+//     if (!isNaN(input) && Number.isInteger((index = Number.parseFloat(input)))) {
+//       const fibIndex = index < 1 ? 0 : index;
+//       formLabel.className = "text";
+//       errorDiv.hidden = true;
+
+//       fibInput.disabled = true;
+//       subButton.disabled = true;
+//       calculatingDiv.hidden = false;
+//       calculatingDiv.innerHTML = `Calculating the Fibonacci of ${input}...`;
+
+//       fibValue = fib(fibIndex);
+//       let li = document.createElement("li");
+//       li.className = isPrime(fibValue) ? "is-prime" : "not-prime";
+//       li.innerHTML = `The Fibonacci of ${input} is ${fibValue === Infinity ? "<strong>TOO LARGE</strong>" : fibValue}.`;
+//       results.appendChild(li);
+
+//       calculatingDiv.hidden = true;
+//       fibInput.disabled = false;
+//       subButton.disabled = false;
+//       form.reset();
+//       fibInput.focus();
+//     } else {
+//       form.reset();
+//       formLabel.className = "error";
+//       errorDiv.hidden = false;
+//       errorDiv.innerHTML = "You must enter an integer value!";
+//       fibInput.focus();
+//     }
+//   });
+// }
