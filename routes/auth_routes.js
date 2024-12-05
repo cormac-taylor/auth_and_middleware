@@ -290,7 +290,6 @@ router.route("/user").get(async (req, res) => {
     isAdmin: session.role === "admin",
     themePreference: session.themePreference,
     defaultColor: false,
-    themePreference.backgroundColor
   });
   return;
 });
