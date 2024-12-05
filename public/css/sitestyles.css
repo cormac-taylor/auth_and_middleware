@@ -1,3 +1,25 @@
 .error {
-    color: #cc0000;
+  color: #cc0000;
+}
+
+.link {
+  color: #0000cc;
+}
+
+button {
+  background-color: #eeeeee;
+  color: black;
+  border: 2px solid #555555;
+}
+
+button:hover {
+  background-color: #555555;
+  color: white;
+}
+
+body {
+  background-color: "{{themePreference.backgroundColor}}";
+  color: "{{themePreference.fontColor}}";
+  margin: auto;
+  width: 50%;
 }

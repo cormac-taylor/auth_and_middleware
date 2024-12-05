@@ -260,6 +260,7 @@ router.route("/user").get(async (req, res) => {
     role: session.role,
     favoriteQuote: session.favoriteQuote,
     isAdmin: session.role === "admin",
+    themePreference: session.themePreference,
   });
   return;
 });
@@ -280,6 +281,7 @@ router.route("/administrator").get(async (req, res) => {
       date.getMonth() + 1
     }/${date.getDate()}/${date.getFullYear()}`,
     favoriteQuote: session.favoriteQuote,
+    themePreference: session.themePreference,
   });
   return;
 });
