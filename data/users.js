@@ -44,7 +44,7 @@ export const signUpUser = async (
   const usedUserId = await usersCollection.findOne({
     userId: caseInsensitiveUserId,
   });
-  if (usedUserId) throw "userId is taken!";
+  if (usedUserId) throw "User ID is not available.";
 
   const insertInfo = await usersCollection.insertOne(newUser);
   if (!insertInfo.acknowledged || !insertInfo.insertedId)

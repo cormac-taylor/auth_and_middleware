@@ -15,18 +15,29 @@ const VALID_ROLES = ["admin", "user"];
 // Sign in form
 let signinForm = document.getElementById("signin-form");
 let user_id_input = document.getElementById("user_id");
-let password_input = document.getElementById("password");
-let client_error = document.getElementById("client_error");
+let password_in_input = document.getElementById("password");
+let submit_button_label = document.getElementById("submit_button_label");
+let client_signin_error = document.getElementById("client_signin_error");
 
 // Sign up form
-
+let signupForm = document.getElementById("signup-form");
+let firstName_input = document.getElementById("firstName");
+let lastName_input = document.getElementById("lastName");
+let userId_input = document.getElementById("userId");
+let password_up_input = document.getElementById("password");
+let confirmPassword_input = document.getElementById("confirmPassword");
+let favoriteQuote_input = document.getElementById("favoriteQuote");
+let backgroundColor_input = document.getElementById("backgroundColor");
+let fontColor_input = document.getElementById("fontColor");
+let role_input = document.getElementById("role");
+let submitButton_label = document.getElementById("submitButton_label");
+let client_signup_error = document.getElementById("client_signup_error");
 
 if (signinForm) {
   signinForm.addEventListener("submit", (event) => {
-    console.log("test");
     const errors = [];
     const userId = user_id_input.value;
-    const password = password_input.value;
+    const password = password_in_input.value;
 
     try {
       user_id_input.value = validateUserId(userId);
@@ -36,21 +47,124 @@ if (signinForm) {
     }
 
     try {
-      password_input.value = validatePassword(password);
+      password_in_input.value = validatePassword(password);
     } catch (e) {
-      password_input.value = password.trim();
+      password_in_input.value = password.trim();
       errors.push(`Password ${e}`);
     }
 
     if (errors.length > 0) {
       event.preventDefault();
 
-      client_error.innerHTML = "";
+      if (submit_button_label) submit_button_label.innerHTML = "";
+      client_signin_error.innerHTML = "";
       for (let e of errors) {
         let li = document.createElement("li");
         li.className = "error";
         li.innerHTML = e;
-        client_error.appendChild(li);
+        client_signin_error.appendChild(li);
+      }
+    }
+  });
+} else if (signupForm) {
+  signupForm.addEventListener("submit", (event) => {
+    const errors = [];
+    const firstName = firstName_input.value;
+    const lastName = lastName_input.value;
+    const userId = userId_input.value;
+    const password = password_up_input.value;
+    const confirmPassword = confirmPassword_input.value;
+    const favoriteQuote = favoriteQuote_input.value;
+    const backgroundColor = backgroundColor_input.value;
+    const fontColor = fontColor_input.value;
+    const role = role_input.value;
+
+    try {
+      firstName_input.value = validateName(firstName);
+    } catch (e) {
+      firstName_input.value = firstName.trim();
+      errors.push(`First Name ${e}`);
+    }
+
+    try {
+      lastName_input.value = validateName(lastName);
+    } catch (e) {
+      lastName_input.value = lastName.trim();
+      errors.push(`Last Name ${e}`);
+    }
+
+    try {
+      userId_input.value = validateUserId(userId);
+    } catch (e) {
+      userId_input.value = userId.trim();
+      errors.push(`User ID ${e}`);
+    }
+
+    let invalidPassword = false;
+    try {
+      password_up_input.value = validatePassword(password);
+    } catch (e) {
+      password_up_input.value = password.trim();
+      invalidPassword = true;
+      errors.push(`Password ${e}`);
+    }
+
+    if (!invalidPassword) {
+      try {
+        confirmPassword_input.value = validatePassword(confirmPassword);
+      } catch (e) {
+        confirmPassword_input.value = confirmPassword.trim();
+        errors.push(`Confirm Password doesn't match.`);
+      }
+    }
+    try {
+      favoriteQuote_input.value = validateQuote(favoriteQuote);
+    } catch (e) {
+      favoriteQuote_input.value = favoriteQuote.trim();
+      errors.push(`Favorite Quote ${e}`);
+    }
+
+    let invalidColor = false;
+    try {
+      backgroundColor_input.value = validateColorCode(backgroundColor);
+    } catch (e) {
+      backgroundColor_input.value = backgroundColor.trim();
+      invalidColor = true;
+      errors.push(`Background Color ${e}`);
+    }
+
+    try {
+      fontColor_input.value = validateColorCode(fontColor);
+    } catch (e) {
+      fontColor_input.value = fontColor.trim();
+      invalidColor = true;
+      errors.push(`Font Color ${e}`);
+    }
+
+    if (
+      !invalidColor &&
+      backgroundColor_input.value === fontColor_input.value
+    ) {
+      errors.push("Background and Font Colors must be different.");
+    }
+
+    try {
+      role_input.value = validateRole(role);
+    } catch (e) {
+      role_input.value = role.trim();
+      errors.push(`Role ${e}`);
+    }
+
+    if (errors.length > 0) {
+      event.preventDefault();
+
+      if (submitButton_label) submitButton_label.innerHTML = "";
+      client_signup_error.innerHTML = "";
+      for (let e of errors) {
+        let li = document.createElement("li");
+        li.className = "error";
+        li.innerHTML = e;
+        client_signup_error.appendChild(li);
       }
     }
   });

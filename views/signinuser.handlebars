@@ -31,18 +31,18 @@
 
   <div>
     <div>
-      <button type="submit" id="signin_button" name="signin_button">
+      <button type="submit" id="submit_button" name="submit_button">
         Sign In
       </button>
+      {{#if hasErrors}}
+        <label
+          for="submit_button"
+          class="error"
+          id="submit_button_label"
+        >{{errors.other}}</label>
+      {{/if}}
     </div>
-    {{#if hasErrors}}
-      <label
-        for="signin_button"
-        class="error"
-        id="signin_error"
-      >{{errors.other}}</label>
-    {{/if}}
-    <ul id="client_error"></ul>
+    <ul id="client_signin_error"></ul>
   </div>
 
 </form>
