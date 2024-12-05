@@ -92,7 +92,7 @@ router
       errors.fontColor = err;
     }
 
-    let wantsUser = false;
+    let wantsUser = undefined;
     try {
       signupData.role = validateRole(signupData.role);
       wantsUser = signupData.role === "user";
@@ -154,12 +154,18 @@ router
         return;
       }
     } catch (e) {
-      res.render("signupuser", {
+      const hndlbrs = {
         pageTitle: "Sign Up",
         data: signupData,
         hasErrors: true,
         errors: { other: e },
-      });
+      };
+      if (wantsUser !== undefined) {
+        hndlbrs.wantsAdmin = !wantsUser;
+        hndlbrs.wantsUser = wantsUser;
+      }
+
+      res.render("signupuser", hndlbrs);
       res.status(400);
     }
   });
