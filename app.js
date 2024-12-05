@@ -113,6 +113,7 @@ app.use("/administrator", (req, res, next) => {
         pageTitle: "403 Forbiden",
         error: "403 Forbiden",
         themePreference: req.session.user.themePreference,
+        defaultColor: false,
       });
       res.status(403);
       return;

@@ -11,7 +11,7 @@
         name="firstName"
         value="{{data.firstName}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -31,7 +31,7 @@
         name="lastName"
         value="{{data.lastName}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -51,7 +51,7 @@
         name="userId"
         value="{{data.userId}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -71,7 +71,7 @@
         name="password"
         value="{{data.password}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -91,7 +91,7 @@
         name="confirmPassword"
         value="{{data.confirmPassword}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -111,7 +111,7 @@
         name="favoriteQuote"
         value="{{data.favoriteQuote}}"
         class="full_width_input"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -130,7 +130,7 @@
         id="backgroundColor"
         name="backgroundColor"
         value="{{data.backgroundColor}}"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -149,7 +149,7 @@
         id="fontColor"
         name="fontColor"
         value="{{data.fontColor}}"
-      />
+      >
     </label>
     {{#if hasErrors}}
       <label
@@ -187,25 +187,33 @@
     {{/if}}
   </div>
 
-  <div>
-    <div>
-      <button type="submit" id="submitButton" name="submitButton">
-        Sign Up
-      </button>
-      {{#if hasErrors}}
+  <div class="centerDiv">
+    <button type="submit" id="submitButton" name="submitButton">
+      Sign Up
+    </button>
+  </div>
+
+  <div class="centerDiv">
+    {{#if hasErrors}}
+      <div>
         <label
           for="submitButton"
           id="submitButton_label"
           class="error"
         >{{errors.other}}</label>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
+  </div>
+
+  <div class="centerDiv">
     <ul id="client_signup_error"></ul>
   </div>
 
 </form>
 
-<a href="/signinuser" class="link">Already have an account? Click here to
-  sign-in</a>
+<div class="singleLink">
+  <a href="/signinuser" class="link">Already have an account? Click here to
+    sign-in</a>
+</div>
 
 <script src="/public/js/form_validate.js"></script>

@@ -1,12 +1,22 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{pageTitle}}</title>
-    <link rel="stylesheet" href="/public/css/sitestyles.css">
+    <link rel="stylesheet" href="/public/css/sitestyles.css" />
   </head>
-  <body style="background-color: {{themePreference.backgroundColor}}; color: {{themePreference.fontColor}}">
+  <body
+    style="background-color:  {{#if defaultColor}}
+                                #161616
+                              {{else}} 
+                                {{themePreference.backgroundColor}}
+                              {{/if}}; 
+                      color:  {{#if defaultColor}}
+                                #eeeeee
+                              {{else}} 
+                                {{themePreference.fontColor}}
+                              {{/if}};">
     {{{body}}}
   </body>
 </html>
+

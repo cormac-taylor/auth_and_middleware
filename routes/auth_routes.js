@@ -19,7 +19,11 @@ router
   .route("/signupuser")
   .get(async (_, res) => {
     try {
-      res.render("signupuser", { pageTitle: "Sign Up", hasErrors: false });
+      res.render("signupuser", {
+        pageTitle: "Sign Up",
+        hasErrors: false,
+        defaultColor: true,
+      });
     } catch (e) {
       res.status(500).json({ error: e });
     }
@@ -109,6 +113,7 @@ router
           errors: errors,
           wantsAdmin: !wantsUser,
           wantsUser: wantsUser,
+          defaultColor: true,
         });
         res.status(400);
         return;
@@ -149,6 +154,7 @@ router
           errors: { other: "Internal Server Error" },
           wantsAdmin: !wantsUser,
           wantsUser: wantsUser,
+          defaultColor: true,
         });
         res.status(500);
         return;
@@ -159,6 +165,7 @@ router
         data: signupData,
         hasErrors: true,
         errors: { other: e },
+        defaultColor: true,
       };
       if (wantsUser !== undefined) {
         hndlbrs.wantsAdmin = !wantsUser;
@@ -174,7 +181,7 @@ router
   .route("/signinuser")
   .get(async (_, res) => {
     try {
-      res.render("signinuser", { pageTitle: "Sign In" });
+      res.render("signinuser", { pageTitle: "Sign In", defaultColor: true });
     } catch (e) {
       res.status(500).json({ error: e });
     }
@@ -202,6 +209,7 @@ router
           data: { user_id: signinData.user_id },
           hasErrors: true,
           errors: errors,
+          defaultColor: true,
         });
         res.status(400);
         return;
@@ -240,8 +248,12 @@ router
           pageTitle: "403 Forbidden",
           error: "403 Forbidden",
         };
-        if (req.session && req.session.user)
+        if (req.session && req.session.user) {
           handlebarsObj.themePreference = req.session.user.themePreference;
+          handlebarsObj.defaultColor = false;
+        } else {
+          handlebarsObj.defaultColor = true;
+        }
         res.render("error", handlebarsObj);
         res.status(403);
         return;
@@ -252,6 +264,7 @@ router
         data: { user_id: signinData.user_id },
         hasErrors: true,
         errors: { other: e },
+        defaultColor: true,
       });
       res.status(400);
     }
@@ -276,6 +289,8 @@ router.route("/user").get(async (req, res) => {
     favoriteQuote: session.favoriteQuote,
     isAdmin: session.role === "admin",
     themePreference: session.themePreference,
+    defaultColor: false,
+    themePreference.backgroundColor
   });
   return;
 });
@@ -297,6 +312,7 @@ router.route("/administrator").get(async (req, res) => {
     }/${date.getDate()}/${date.getFullYear()}`,
     favoriteQuote: session.favoriteQuote,
     themePreference: session.themePreference,
+    defaultColor: false,
   });
   return;
 });
@@ -306,6 +322,7 @@ router.route("/signoutuser").get(async (req, res) => {
     req.session.destroy();
     res.render("signoutuser", {
       pageTitle: "Signed Out",
+      defaultColor: true,
     });
     return;
   } else {

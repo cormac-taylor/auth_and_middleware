@@ -4,7 +4,7 @@
   <div>
     <label for="user_id" id="user_id_label" class="input_label">
       User ID
-      <input type="text" id="user_id" name="user_id" value="{{data.user_id}}" />
+      <input type="text" id="user_id" name="user_id" value="{{data.user_id}}" >
     </label>
     {{#if hasErrors}}
       <label
@@ -18,7 +18,7 @@
   <div>
     <label for="password" id="password_label" class="input_label">
       Password
-      <input type="password" id="password" name="password" />
+      <input type="password" id="password" name="password" >
     </label>
     {{#if hasErrors}}
       <label
@@ -29,24 +29,30 @@
     {{/if}}
   </div>
 
-  <div>
-    <div>
-      <button type="submit" id="submit_button" name="submit_button">
-        Sign In
-      </button>
-      {{#if hasErrors}}
-        <label
-          for="submit_button"
-          class="error"
-          id="submit_button_label"
-        >{{errors.other}}</label>
-      {{/if}}
+  <div id="submitDiv" class="centerDiv">
+    <button type="submit" id="submit_button" name="submit_button">
+      Sign In
+    </button>
+  </div>
+
+  {{#if hasErrors}}
+    <div class="centerDiv">
+      <label
+        for="submit_button"
+        class="error"
+        id="submit_button_label"
+      >{{errors.other}}</label>
     </div>
+  {{/if}}
+
+  <div class="centerDiv">
     <ul id="client_signin_error"></ul>
   </div>
 
 </form>
 
-<a href="/signupuser" class="link">Click here to signup!</a>
+<div class="singleLink">
+  <a href="/signupuser" class="link singleLink">Click here to signup!</a>
+</div>
 
 <script src="/public/js/form_validate.js"></script>
