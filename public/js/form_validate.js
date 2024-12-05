@@ -25,6 +25,8 @@ let favoriteQuote_input = document.getElementById("favoriteQuote");
 let backgroundColor_input = document.getElementById("backgroundColor");
 let fontColor_input = document.getElementById("fontColor");
 let role_input = document.getElementById("role");
+let user_option = document.getElementById("user_option");
+let admin_option = document.getElementById("admin_option");
 let submitButton_label = document.getElementById("submitButton_label");
 let client_signup_error = document.getElementById("client_signup_error");
 
@@ -62,6 +64,14 @@ if (signinForm) {
     }
   });
 } else if (signupForm) {
+  if (role_input.value === "user") {
+    user_option.defaultSelected = true;
+    admin_option.defaultSelected = false;
+  } else {
+    user_option.defaultSelected = false;
+    admin_option.defaultSelected = true;
+  }
+
   signupForm.addEventListener("submit", (event) => {
     const errors = [];
     const firstName = firstName_input.value;

@@ -92,8 +92,10 @@ router
       errors.fontColor = err;
     }
 
+    let wantsUser = false;
     try {
       signupData.role = validateRole(signupData.role);
+      wantsUser = signupData.role === "user";
     } catch (e) {
       errors.role = e;
     }
@@ -105,6 +107,8 @@ router
           data: signupData,
           hasErrors: true,
           errors: errors,
+          wantsAdmin: !wantsUser,
+          wantsUser: wantsUser,
         });
         res.status(400);
         return;
@@ -143,6 +147,8 @@ router
           data: signupData,
           hasErrors: true,
           errors: { other: "Internal Server Error" },
+          wantsAdmin: !wantsUser,
+          wantsUser: wantsUser,
         });
         res.status(500);
         return;

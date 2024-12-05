@@ -168,8 +168,18 @@
           value="admin"
           id="admin_option"
           class="role_option"
+          {{#if wantsAdmin}}
+            selected
+          {{/if}}
         >Admin</option>
-        <option value="user" id="user_option" class="role_option">User</option>
+        <option
+          value="user"
+          id="user_option"
+          class="role_option"
+          {{#if wantsUser}}
+            selected
+          {{/if}}
+        >User</option>
       </select>
     </label>
     {{#if hasErrors}}
