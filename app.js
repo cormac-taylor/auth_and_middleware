@@ -112,6 +112,7 @@ app.use("/administrator", (req, res, next) => {
       res.render("error", {
         pageTitle: "403 Forbiden",
         error: "403 Forbiden",
+        themePreference: req.session.user.themePreference,
       });
       res.status(403);
       return;

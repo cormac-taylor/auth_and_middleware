@@ -224,10 +224,13 @@ router
         res.redirect("/user");
         return;
       } else {
-        res.render("error", {
+        const handlebarsObj = {
           pageTitle: "403 Forbidden",
           error: "403 Forbidden",
-        });
+        };
+        if (req.session && req.session.user)
+          handlebarsObj.themePreference = req.session.user.themePreference;
+        res.render("error", handlebarsObj);
         res.status(403);
         return;
       }
