@@ -4,8 +4,11 @@ import authRoutes from "./auth_routes.js";
 const constructorMethod = (app) => {
   app.use("/", authRoutes);
 
-  app.use("*", (_, res) => {
-    res.render("error", { pageTitle: "404 Not Found", error: "404 Not Found" });
+  app.use("*", (req, res) => {
+    const errorObj = { pageTitle: "404 Not Found", error: "404 Not Found" };
+    if (req.session && req.session.user)
+      errorObj.themePreference = req.session.user.themePreference;
+    res.render("error", errorObj);
     res.status(404);
     return;
   });
