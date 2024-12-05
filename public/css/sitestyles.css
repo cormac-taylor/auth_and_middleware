@@ -59,11 +59,10 @@ label {
 
 .centerDiv {
   display: flex;
-  /* margin-left: 36px; */
   justify-content: center;
   align-items: center;
 }
 
-.singleLink {
+.center {
   text-align: center;
 }
