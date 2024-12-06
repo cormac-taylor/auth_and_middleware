@@ -30,6 +30,14 @@ let admin_option = document.getElementById("admin_option");
 let submitButton_label = document.getElementById("submitButton_label");
 let client_signup_error = document.getElementById("client_signup_error");
 
+let bodyTag = document.getElementById("bodyTag");
+if (bodyTag.classList.length > 0) {
+  themePreference = JSON.parse(bodyTag.classList[0])
+  themePreference = JSON.parse(themePreference)
+  document.body.style.backgroundColor = themePreference.backgroundColor;
+  document.body.style.color = themePreference.fontColor;
+}
+
 if (signinForm) {
   signinForm.addEventListener("submit", (event) => {
     const errors = [];

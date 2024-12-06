@@ -25,6 +25,8 @@ button:hover {
 body {
   margin: auto;
   width: 25%;
+  background-color: #161616;
+  color: #eeeeee;
 }
 
 input {

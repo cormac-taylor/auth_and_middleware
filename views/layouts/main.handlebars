@@ -6,17 +6,8 @@
     <title>{{pageTitle}}</title>
     <link rel="stylesheet" href="/public/css/sitestyles.css">
   </head>
-  <body
-    style="background-color:  {{#if defaultColor}}
-                                #161616
-                              {{else}} 
-                                {{themePreference.backgroundColor}}
-                              {{/if}}; 
-                      color:  {{#if defaultColor}}
-                                #eeeeee
-                              {{else}} 
-                                {{themePreference.fontColor}}
-                              {{/if}};">
+  <body class="{{themePreference}}" id="bodyTag">
     {{{body}}}
   </body>
+  <script src="/public/js/form_validate.js"></script>
 </html>
