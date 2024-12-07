@@ -8,7 +8,7 @@ const constructorMethod = (app) => {
     const errorObj = { pageTitle: "404 Not Found", error: "404 Not Found" };
     if (req.session && req.session.user)
       errorObj.themePreference = JSON.stringify(
-        req.session.user.themePreference
+        JSON.stringify(req.session.user.themePreference)
       );
     res.render("error", errorObj);
     res.status(404);

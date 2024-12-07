@@ -44,12 +44,16 @@ app.use("/", (req, res, next) => {
     req.method = "GET";
     if (!req.session || !req.session.user) {
       res.redirect("/signinuser");
+      return;
     } else if (req.session.user.role === "admin") {
       res.redirect("/administrator");
+      return;
     } else if (req.session.user.role === "user") {
       res.redirect("/user");
+      return;
     } else {
       res.redirect("/signinuser");
+      return;
     }
   } else {
     next();
@@ -63,8 +67,10 @@ app.use("/signinuser", (req, res, next) => {
       next();
     } else if (req.session.user.role === "admin") {
       res.redirect("/administrator");
+      return;
     } else if (req.session.user.role === "user") {
       res.redirect("/user");
+      return;
     } else {
       next();
     }
@@ -80,8 +86,10 @@ app.use("/signupuser", (req, res, next) => {
       next();
     } else if (req.session.user.role === "admin") {
       res.redirect("/administrator");
+      return;
     } else if (req.session.user.role === "user") {
       res.redirect("/user");
+      return;
     } else {
       next();
     }
@@ -95,6 +103,7 @@ app.use("/user", (req, res, next) => {
   if (method.toLowerCase() === "get") {
     if (!req.session || !req.session.user) {
       res.redirect("/signinuser");
+      return;
     } else {
       next();
     }
@@ -108,11 +117,14 @@ app.use("/administrator", (req, res, next) => {
   if (method.toLowerCase() === "get") {
     if (!req.session || !req.session.user) {
       res.redirect("/signinuser");
+      return;
     } else if (req.session.user.role !== "admin") {
       res.render("error", {
         pageTitle: "403 Forbiden",
         error: "403 Forbiden",
-        themePreference: JSON.stringify(req.session.user.themePreference),
+        themePreference: JSON.stringify(
+          JSON.stringify(req.session.user.themePreference)
+        ),
       });
       res.status(403);
       return;
@@ -129,6 +141,7 @@ app.use("/signoutuser", (req, res, next) => {
   if (method.toLowerCase() === "get") {
     if (!req.session || !req.session.user) {
       res.redirect("/signinuser");
+      return;
     } else {
       next();
     }

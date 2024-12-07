@@ -74,7 +74,7 @@ export const signInUser = async (userId, password) => {
     lastName: foundUserId.lastName,
     userId: foundUserId.userId,
     favoriteQuote: foundUserId.favoriteQuote,
-    themePreference: JSON.stringify(foundUserId.themePreference),
+    themePreference: foundUserId.themePreference,
     role: foundUserId.role,
   };
   return res;

@@ -212,8 +212,6 @@ router
 
       const { userId: enteredUserId, password: enteredPassword } = signinData;
 
-      const signedInUser = await signInUser(enteredUserId, enteredPassword);
-
       const {
         firstName,
         lastName,
@@ -221,7 +219,7 @@ router
         favoriteQuote,
         themePreference,
         role,
-      } = signedInUser;
+      } = await signInUser(enteredUserId, enteredPassword);
 
       req.session.user = {
         firstName,
@@ -278,7 +276,7 @@ router.route("/user").get(async (req, res) => {
     role: session.role,
     favoriteQuote: session.favoriteQuote,
     isAdmin: session.role === "admin",
-    themePreference: JSON.stringify(session.themePreference),
+    themePreference: JSON.stringify(JSON.stringify(session.themePreference)),
   });
   return;
 });
@@ -299,7 +297,7 @@ router.route("/administrator").get(async (req, res) => {
       date.getMonth() + 1
     }/${date.getDate()}/${date.getFullYear()}`,
     favoriteQuote: session.favoriteQuote,
-    themePreference: JSON.stringify(session.themePreference),
+    themePreference: JSON.stringify(JSON.stringify(session.themePreference)),
   });
   return;
 });
