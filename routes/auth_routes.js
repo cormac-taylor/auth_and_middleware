@@ -187,9 +187,9 @@ router
     const signinData = req.body;
 
     try {
-      signinData.user_id = validateUserId(signinData.user_id);
+      signinData.userId = validateUserId(signinData.userId);
     } catch (e) {
-      errors.user_id = e;
+      errors.userId = e;
     }
 
     try {
@@ -202,7 +202,7 @@ router
       if (Object.keys(errors).length > 0) {
         res.render("signinuser", {
           pageTitle: "Sign In",
-          data: { user_id: signinData.user_id },
+          data: { userId: signinData.userId },
           hasErrors: true,
           errors: errors,
         });
@@ -210,9 +210,9 @@ router
         return;
       }
 
-      const { user_id, password } = signinData;
+      const { userId: enteredUserId, password: enteredPassword } = signinData;
 
-      const signedInUser = await signInUser(user_id, password);
+      const signedInUser = await signInUser(enteredUserId, enteredPassword);
 
       const {
         firstName,
@@ -252,7 +252,7 @@ router
     } catch (e) {
       res.render("signinuser", {
         pageTitle: "Sign In",
-        data: { user_id: signinData.user_id },
+        data: { userId: signinData.userId },
         hasErrors: true,
         errors: { other: e },
       });

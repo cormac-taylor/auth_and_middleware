@@ -2,16 +2,16 @@
 <form action="/signinuser" method="POST" id="signin-form">
 
   <div>
-    <label for="user_id" id="user_id_label" class="input_label">
+    <label for="userId" id="userId_label" class="input_label">
       User ID
-      <input type="text" id="user_id" name="user_id" value="{{data.user_id}}" />
+      <input type="text" id="userId" name="userId" value="{{data.userId}}" />
     </label>
     {{#if hasErrors}}
       <label
-        for="user_id"
+        for="userId"
         class="error"
-        id="user_id_error"
-      >{{errors.user_id}}</label>
+        id="userId_error"
+      >{{errors.userId}}</label>
     {{/if}}
   </div>
 

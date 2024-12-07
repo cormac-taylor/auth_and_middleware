@@ -9,7 +9,7 @@ const VALID_ROLES = ["admin", "user"];
 
 // Sign in form
 let signinForm = document.getElementById("signin-form");
-let user_id_input = document.getElementById("user_id");
+let userId_in_input = document.getElementById("userId");
 let password_in_input = document.getElementById("password");
 let submit_button_label = document.getElementById("submit_button_label");
 let client_signin_error = document.getElementById("client_signin_error");
@@ -18,7 +18,7 @@ let client_signin_error = document.getElementById("client_signin_error");
 let signupForm = document.getElementById("signup-form");
 let firstName_input = document.getElementById("firstName");
 let lastName_input = document.getElementById("lastName");
-let userId_input = document.getElementById("userId");
+let userId_up_input = document.getElementById("userId");
 let password_up_input = document.getElementById("password");
 let confirmPassword_input = document.getElementById("confirmPassword");
 let favoriteQuote_input = document.getElementById("favoriteQuote");
@@ -32,8 +32,8 @@ let client_signup_error = document.getElementById("client_signup_error");
 
 let bodyTag = document.getElementById("bodyTag");
 if (bodyTag.classList.length > 0) {
-  themePreference = JSON.parse(bodyTag.classList[0])
-  themePreference = JSON.parse(themePreference)
+  themePreference = JSON.parse(bodyTag.classList[0]);
+  themePreference = JSON.parse(themePreference);
   document.body.style.backgroundColor = themePreference.backgroundColor;
   document.body.style.color = themePreference.fontColor;
 }
@@ -41,13 +41,13 @@ if (bodyTag.classList.length > 0) {
 if (signinForm) {
   signinForm.addEventListener("submit", (event) => {
     const errors = [];
-    const userId = user_id_input.value;
+    const userId = userId_in_input.value;
     const password = password_in_input.value;
 
     try {
-      user_id_input.value = validateUserId(userId);
+      userId_in_input.value = validateUserId(userId);
     } catch (e) {
-      user_id_input.value = userId.trim();
+      userId_in_input.value = userId.trim();
       errors.push(`User ID ${e}`);
     }
 
@@ -84,7 +84,7 @@ if (signinForm) {
     const errors = [];
     const firstName = firstName_input.value;
     const lastName = lastName_input.value;
-    const userId = userId_input.value;
+    const userId = userId_up_input.value;
     const password = password_up_input.value;
     const confirmPassword = confirmPassword_input.value;
     const favoriteQuote = favoriteQuote_input.value;
@@ -107,9 +107,9 @@ if (signinForm) {
     }
 
     try {
-      userId_input.value = validateUserId(userId);
+      userId_up_input.value = validateUserId(userId);
     } catch (e) {
-      userId_input.value = userId.trim();
+      userId_up_input.value = userId.trim();
       errors.push(`User ID ${e}`);
     }
 
