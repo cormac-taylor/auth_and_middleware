@@ -31,11 +31,15 @@ let submitButton_label = document.getElementById("submitButton_label");
 let client_signup_error = document.getElementById("client_signup_error");
 
 let bodyTag = document.getElementById("bodyTag");
+let links = document.getElementsByTagName("a");
 if (bodyTag.classList.length > 0) {
   themePreference = JSON.parse(bodyTag.classList[0]);
   themePreference = JSON.parse(themePreference);
   document.body.style.backgroundColor = themePreference.backgroundColor;
   document.body.style.color = themePreference.fontColor;
+  for (i = 0; i < links.length; i++) {
+    links[i].style.color = themePreference.fontColor;
+  }  
 }
 
 if (signinForm) {
